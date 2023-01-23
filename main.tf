@@ -2,6 +2,16 @@ provider "aws" {
   region = "us-east-1"
 }
 
+terraform {
+  backend "s3" {
+    bucket         = "kurepin-tf-state"
+    key            = "global/s3/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "kurepin-tf-state-locks"
+    encrypt        = true
+
+  }
+}
 
 resource "aws_security_group" "webserver-sg" {
   name        = "webserver-sg"
